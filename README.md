@@ -1,4 +1,4 @@
-NAME
+NAME [![Build Status](https://travis-ci.org/moznion/p6-IO-Blob.svg?branch=master)](https://travis-ci.org/moznion/p6-IO-Blob)
 ====
 
 IO::Blob - IO:: interface for reading/writing a Blob
