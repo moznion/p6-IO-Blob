@@ -360,6 +360,10 @@ Returns L<Bool::True> if the Blob is closed.
 
 Returns the current Blob.
 
+=head1 SEE ALSO
+
+L<IO::Scalar of perl5|https://metacpan.org/pod/IO::Scalar>
+
 =head1 LICENSE
 
 Copyright 2015 moznion <moznion@gmail.com>
