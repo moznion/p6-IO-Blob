@@ -124,7 +124,7 @@ method words(IO::Blob:D: $count = Inf) {
 
 method print(IO::Blob:D: *@text) returns Bool {
     for (@text) -> $text {
-        self.write($text.encode)
+        self.write(($text ~ $.nl).encode)
     }
 
     return True;
@@ -144,7 +144,7 @@ method read(IO::Blob:D: Int(Cool:D) $bytes) {
 }
 
 method write(IO::Blob:D: Blob:D $buf) {
-    my $data = $.data ~ $buf ~ LF;
+    my $data = $.data ~ $buf;
     $!pos = $data.elems;
     $.data = $data;
 

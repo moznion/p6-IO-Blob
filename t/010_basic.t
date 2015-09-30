@@ -196,12 +196,12 @@ subtest {
     my IO::Blob $io = IO::Blob.new(TEXT.encode);
 
     $io.write('line5'.encode);
-    is $io.tell(), 29;
+    is $io.tell(), 28;
     # is $io.ins(), 5;
     is $io.eof(), True;
 
     $io.seek(0, 0);
-    is $io.read(TEXT.chars + 12), "line1\nline2\nline3\nline4line5\n".encode;
+    is $io.read(TEXT.chars + 12), "line1\nline2\nline3\nline4line5".encode;
 }, 'Test for write() and seek()';
 
 subtest {
