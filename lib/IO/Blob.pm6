@@ -7,13 +7,14 @@ constant LF = "\n".encode;
 constant TAB = "\t".encode;
 constant SPACE = " ".encode;
 
-has Int $!pos .= new;
-has Int $.ins is rw .= new;
+has Int $!pos = 0;
+has Int $!ins = 1;
 has Blob $.data is rw;
 has Bool $!is_closed = False;
+has Str $.nl is rw = "\n";
 
 method new(Blob $data = Buf.new) {
-    return self.bless(:$data, pos => 0, ins => 1);
+    return self.bless(:$data);
 }
 
 method open(Blob $data = Buf.new) {
@@ -25,12 +26,16 @@ method get(IO::Blob:D:) {
         return EMPTY;
     }
 
-    # TODO other separator
+    unless (defined $.nl) {
+        return self.slurp-rest(bin => True);
+    }
+
     my $i = $!pos;
     my $len = $.data.elems;
+
     loop (; $i < $len; $i++) {
         if ($.data.subbuf($i, 1) eq LF) {
-            $.ins++;
+            $!ins++;
             last;
         }
     }
@@ -43,6 +48,7 @@ method get(IO::Blob:D:) {
         $line = $.data.subbuf($!pos, $i - $!pos);
         $!pos = $len;
     }
+
     return $line;
 }
 
@@ -55,7 +61,7 @@ method getc(IO::Blob:D:) {
 
     # TODO other separator
     if ($char eq LF) {
-        $.ins++;
+        $!ins++;
     }
 
     return $char;
@@ -87,7 +93,7 @@ method word(IO::Blob:D:) {
         if ($char eq TAB || $char eq SPACE) {
             last;
         } elsif ($char eq LF) {
-            $.ins++;
+            $!ins++;
             last;
         }
     }
@@ -169,6 +175,10 @@ method tell(IO::Blob:D:) returns Int {
     return $!pos;
 }
 
+method ins(IO::Blob:D:) returns Int {
+    return $!ins;
+}
+
 proto method slurp-rest(|) { * }
 
 multi method slurp-rest(IO::Blob:D: :$bin!) returns Buf {
@@ -206,7 +216,7 @@ method eof(IO::Blob:D:) {
 method close(IO::Blob:D:) {
     $.data = Nil;
     $!pos = Nil;
-    $.ins = Nil;
+    $!ins = Nil;
     $!is_closed = True;
 }
 
@@ -345,6 +355,10 @@ Will close a previously opened Blob.
 =head2 is-closed(IO::Blob:D:)
 
 Returns L<Bool::True> if the Blob is closed.
+
+=head2 data(IO::Blob:D:)
+
+Returns the current Blob.
 
 =head1 LICENSE
 
