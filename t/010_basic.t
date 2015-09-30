@@ -227,8 +227,11 @@ subtest {
 
 subtest {
     my IO::Blob $io = IO::Blob.new(TEXT.encode);
+    is $io.is-closed(), False;
+
     $io.close();
 
+    is $io.is-closed(), True;
     is $io.get(), "".encode;
     is $io.getc(), "".encode;
     is $io.lines(), ();
