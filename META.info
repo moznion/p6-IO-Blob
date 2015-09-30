@@ -1,13 +1,17 @@
 {
     "name" : "IO::Blob",
+    "version" : "0.0.1",
+    "description" : "IO:: interface for reading/writing a Blob",
     "source-url" : "git://github.com/moznion/p6-IO-Blob.git",
+    "support" : {
+        "bugtracker" : "https://github.com/moznion/p6-IO-Blob/issues"
+    },
     "perl" : "v6",
     "provides" : {
         "IO::Blob" : "lib/IO/Blob.pm6"
     },
+    "auth": "github:moznion"
     "depends" : [ ],
-    "description" : "",
-    "version" : "*",
     "authors" : [
         "moznion"
     ]
