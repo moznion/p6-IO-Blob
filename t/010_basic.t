@@ -189,6 +189,7 @@ subtest {
 
     $io.seek(0, 0);
     is $io.read(TEXT.chars + 12), "line1\nline2\nline3\nline4line5\nline6\n".encode;
+    is $io.data(), "line1\nline2\nline3\nline4line5\nline6\n".encode;
 }, 'Test for print() and seek()';
 
 subtest {
@@ -241,6 +242,12 @@ subtest {
     is $io.slurp-rest(bin => True), "".encode;
     is $io.slurp-rest(enc => 'utf8'), "";
 }, 'Test for close()';
+
+subtest {
+    my IO::Blob $io = IO::Blob.new(TEXT.encode);
+    $io.nl = Nil;
+    is $io.get(), TEXT.encode;
+}, 'Test for nl';
 
 done-testing;
 
