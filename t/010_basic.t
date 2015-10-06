@@ -224,6 +224,16 @@ subtest {
         $io.seek(6, 0);
         is $io.slurp-rest(enc => 'utf8'), "line2\nline3\nline4";
     }, 'with encode';
+
+    subtest {
+        my IO::Blob $io = IO::Blob.new(TEXT.encode);
+
+        is $io.slurp-rest(), "line1\nline2\nline3\nline4";
+        is $io.slurp-rest(), "";
+
+        $io.seek(6, 0);
+        is $io.slurp-rest(), "line2\nline3\nline4";
+    }, 'with out encode';
 }, 'Test for slurp-rest';
 
 subtest {

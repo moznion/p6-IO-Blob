@@ -196,7 +196,7 @@ multi method slurp-rest(IO::Blob:D: :$bin!) returns Buf {
     return $buf ~ $read;
 }
 
-multi method slurp-rest(IO::Blob:D: :$enc) returns Str {
+multi method slurp-rest(IO::Blob:D: :$enc = 'utf8') returns Str {
     if self.eof {
         return "";
     }
@@ -340,7 +340,7 @@ Returns the number of lines read from the file.
 
 Return the remaining content of the Blob from the current position (which may have been set by previous reads or by seek.) If the adverb C<:bin> is provided a Buf will be returned.
 
-=head2 slurp-rest(IO::Blob:D: :$enc) returns Str
+=head2 slurp-rest(IO::Blob:D: :$enc = 'utf8') returns Str
 
 Return the remaining content of the Blob from the current position (which may have been set by previous reads or by seek.) Return will be a Str with the optional encoding C<:enc>.
 

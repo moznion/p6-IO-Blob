@@ -129,7 +129,7 @@ slurp-rest(IO::Blob:D: :$bin!) returns Buf
 
 Return the remaining content of the Blob from the current position (which may have been set by previous reads or by seek.) If the adverb `:bin` is provided a Buf will be returned.
 
-slurp-rest(IO::Blob:D: :$enc) returns Str
+slurp-rest(IO::Blob:D: :$enc = 'utf8') returns Str
 -----------------------------------------
 
 Return the remaining content of the Blob from the current position (which may have been set by previous reads or by seek.) Return will be a Str with the optional encoding `:enc`.
