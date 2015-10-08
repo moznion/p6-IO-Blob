@@ -12,6 +12,17 @@ has Int $!ins = 1;
 has Blob $.data is rw;
 has Bool $!is_closed = False;
 has Str $.nl is rw = "\n";
+has $.path;
+
+multi method gist(IO::Blob:D:) {
+    $!is_closed
+        ?? "IO::Blob(closed)"
+        !! "IO::Blob(opened, at ins {$!ins} / pos {$!pos})"
+}
+
+multi method perl(IO::Blob:D:) {
+    "IO::Blob.new(data => {$.data.perl})"
+}
 
 method new(Blob $data = Buf.new) {
     return self.bless(:$data);
