@@ -97,6 +97,8 @@ subtest {
     is $io.ins(), 4;
 
     is $io.eof(), True;
+    is $io.perl, 'IO::Blob.new(data => utf8.new(108, 105, 110, 101, 49, 10, 108, 105, 110, 101, 50, 10, 108, 105, 110, 101, 51, 10, 108, 105, 110, 101, 52))';
+    is $io.gist, 'IO::Blob(opened, at ins 4 / pos 23)';
 }, 'Test for getc()';
 
 subtest {
@@ -251,6 +253,8 @@ subtest {
     is $io.read(100), "".encode;
     is $io.slurp-rest(bin => True), "".encode;
     is $io.slurp-rest(enc => 'utf8'), "";
+    is $io.perl, 'IO::Blob.new(data => Blob)';
+    is $io.gist, 'IO::Blob(closed)';
 }, 'Test for close()';
 
 subtest {
