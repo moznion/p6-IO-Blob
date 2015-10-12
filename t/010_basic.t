@@ -185,13 +185,13 @@ subtest {
     my IO::Blob $io = IO::Blob.new(TEXT.encode);
 
     $io.print('line5', 'line6');
-    is $io.tell(), 35;
+    is $io.tell(), 33;
     # is $io.ins(), 5;
     is $io.eof(), True;
 
     $io.seek(0, 0);
-    is $io.read(TEXT.chars + 12), "line1\nline2\nline3\nline4line5\nline6\n".encode;
-    is $io.data(), "line1\nline2\nline3\nline4line5\nline6\n".encode;
+    is $io.read(TEXT.chars + 12), "line1\nline2\nline3\nline4line5line6".encode;
+    is $io.data(), "line1\nline2\nline3\nline4line5line6".encode;
 }, 'Test for print() and seek()';
 
 subtest {

@@ -134,10 +134,7 @@ method words(IO::Blob:D: $count = Inf) {
 }
 
 method print(IO::Blob:D: *@text) returns Bool {
-    for (@text) -> $text {
-        self.write(($text ~ $.nl).encode)
-    }
-
+    self.write(@text.join.encode);
     return True;
 }
 
