@@ -44,7 +44,7 @@ subtest {
         is $io.ins(), 1;
         is $io.eof(), False;
 
-        my @expected = ["line1\n".encode, "line2\n".encode, "line3\n".encode, "line4".encode];
+        my @expected = ["line1\n", "line2\n", "line3\n", "line4"];
         is-deeply $io.lines(), @expected;
         is $io.tell(), 23;
         is $io.ins(), 4;
@@ -60,7 +60,7 @@ subtest {
         is $io.ins(), 1;
         is $io.eof(), False;
 
-        my @expected = ["line1\n".encode, "line2\n".encode];
+        my @expected = ["line1\n", "line2\n"];
         is-deeply $io.lines(2), @expected;
         is $io.tell(), 12;
         is $io.ins(), 3;
@@ -139,7 +139,7 @@ subtest {
         is $io.ins(), 1;
         is $io.eof(), False;
 
-        my @expected = ["word1 ".encode, "word2\t".encode, "word3\n".encode, "word4".encode];
+        my @expected = ["word1 ", "word2\t", "word3\n", "word4"];
         is-deeply $io.words(), @expected;
         is $io.tell(), 23;
         is $io.ins(), 2;
@@ -155,7 +155,7 @@ subtest {
         is $io.ins(), 1;
         is $io.eof(), False;
 
-        my @expected = ["word1 ".encode, "word2\t".encode, "word3\n".encode];
+        my @expected = ["word1 ", "word2\t", "word3\n"];
         is-deeply $io.words(3), @expected;
         is $io.tell(), 18;
         is $io.ins(), 2;

@@ -28,17 +28,15 @@ method new(Blob $data = Buf.new) {
     return self.bless(:$data);
 }
 
-method open(Blob $data = Buf.new) {
+method open(Blob $data = Buf.new) returns IO::Blob {
     return self.new($data);
 }
 
-method get(IO::Blob:D:) {
-    if self.eof {
-        return EMPTY;
-    }
+method get(IO::Blob:D:) returns Str {
+    return '' if self.eof;
 
     unless (defined $.nl) {
-        return self.slurp-rest(bin => True);
+        return self.slurp-rest();
     }
 
     my $i = $!pos;
@@ -60,13 +58,11 @@ method get(IO::Blob:D:) {
         $!pos = $len;
     }
 
-    return $line;
+    return $line.decode;
 }
 
-method getc(IO::Blob:D:) {
-    if self.eof {
-        return EMPTY;
-    }
+method getc(IO::Blob:D:) returns Str {
+    return '' if self.eof;
 
     my $char = $.data.subbuf($!pos++, 1);
 
@@ -75,7 +71,7 @@ method getc(IO::Blob:D:) {
         $!ins++;
     }
 
-    return $char;
+    return $char.decode;
 }
 
 method lines(IO::Blob:D: $limit = Inf) {
@@ -91,9 +87,9 @@ method lines(IO::Blob:D: $limit = Inf) {
     return @lines;
 }
 
-method word(IO::Blob:D:) {
+method word(IO::Blob:D:) returns Str {
     if self.eof {
-        return EMPTY;
+        return '';
     }
 
     # TODO other separator
@@ -117,7 +113,7 @@ method word(IO::Blob:D:) {
         $buf = $.data.subbuf($!pos, $i - $!pos);
         $!pos = $len;
     }
-    return $buf;
+    return $buf.decode;
 }
 
 method words(IO::Blob:D: $count = Inf) {
@@ -138,7 +134,7 @@ method print(IO::Blob:D: *@text) returns Bool {
     return True;
 }
 
-method read(IO::Blob:D: Int(Cool:D) $bytes) {
+method read(IO::Blob:D: Int(Cool:D) $bytes) returns Blob {
     if self.eof {
         return EMPTY;
     }
@@ -148,10 +144,11 @@ method read(IO::Blob:D: Int(Cool:D) $bytes) {
 
     # TODO ins
 
+    $read.WHAT.say;
     return $read;
 }
 
-method write(IO::Blob:D: Blob:D $buf) {
+method write(IO::Blob:D: Blob:D $buf) returns Bool {
     my $data = $.data ~ $buf;
     $!pos = $data.elems;
     $.data = $data;
@@ -161,7 +158,7 @@ method write(IO::Blob:D: Blob:D $buf) {
     return True;
 }
 
-method seek(IO::Blob:D: int $offset, int $whence) {
+method seek(IO::Blob:D: int $offset, int $whence) returns Bool {
     my $eofpos = $.data.elems;
 
     # Seek:
@@ -217,7 +214,7 @@ multi method slurp-rest(IO::Blob:D: :$enc = 'utf8') returns Str {
     return $read;
 }
 
-method eof(IO::Blob:D:) {
+method eof(IO::Blob:D:) returns Bool {
     return $!is_closed || $!pos >= $.data.elems;
 }
 
@@ -228,7 +225,7 @@ method close(IO::Blob:D:) {
     $!is_closed = True;
 }
 
-method is-closed(IO::Blob:D:) {
+method is-closed(IO::Blob:D:) returns Bool {
     return $!is_closed;
 }
 
