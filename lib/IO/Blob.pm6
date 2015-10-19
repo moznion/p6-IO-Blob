@@ -9,7 +9,7 @@ constant SPACE = " ".encode;
 
 has Int $!pos = 0;
 has Int $!ins = 1;
-has Blob $.data is rw;
+has Blob $.data is rw = Buf.new;
 has Bool $!is_closed = False;
 has Str $.nl is rw = "\n";
 has $.path;
