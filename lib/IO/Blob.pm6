@@ -239,6 +239,8 @@ method is-closed(IO::Blob:D:) returns Bool {
 
 =begin pod
 
+=head1 NAME
+
 IO::Blob - IO:: interface for reading/writing a Blob
 
 =head1 SYNOPSIS
@@ -249,9 +251,17 @@ IO::Blob - IO:: interface for reading/writing a Blob
     my $data = "foo\nbar\n";
     my IO::Blob $io = IO::Blob.new($data.encode);
 
+    $io.get; # => "foo\n"
+
+    $io.print('buz');
+
+    $io.seek(0, 0); # rewind
+
+    $io.slurp-rest; # => "foo\nbar\nbuz"
+
 =head1 DESCRIPTION
 
-IO:: interface for reading/writing a Blob.
+C<IO::> interface for reading/writing a Blob.
 This class inherited from L<IO::Handle>.
 
 The IO::Blob class implements objects which behave just like
@@ -274,19 +284,31 @@ Make a instance. This method is equivalent to C<new>.
 
     my $io = IO::Blob.open("foo\nbar\n".encode);
 
+=head2 new(Str $str)
+
+Make a instance. This method is equivalent to C<open>.
+
+    my $io = IO::Blob.new("foo\nbar\n");
+
+=head2 open(Str $str)
+
+Make a instance. This method is equivalent to C<new>.
+
+    my $io = IO::Blob.open("foo\nbar\n");
+
 =head2 get(IO::Blob:D:)
 
 Reads a single line from the Blob.
 
     my $io = IO::Blob.open("foo\nbar\n".encode);
-    $io.get; // => "foo\n"
+    $io.get; # => "foo\n"
 
 =head2 getc(IO::Blob:D:)
 
 Read a single character from the Blob.
 
     my $io = IO::Blob.open("foo\nbar\n".encode);
-    $io.getc; // => "f\n"
+    $io.getc; # => "f\n"
 
 =head2 lines(IO::Blob:D: $limit = Inf)
 
@@ -294,7 +316,7 @@ Return a lazy list of the Blob's lines read via C<get>, limited to C<$limit> lin
 
     my $io = IO::Blob.open("foo\nbar\n".encode);
     for $io.lines -> $line {
-        $line; // 1st: "foo\n", 2nd: "bar\n"
+        $line; # 1st: "foo\n", 2nd: "bar\n"
     }
 
 =head2 word(IO::Blob:D:)
@@ -302,7 +324,7 @@ Return a lazy list of the Blob's lines read via C<get>, limited to C<$limit> lin
 Read a single word (separated on whitespace) from the Blob.
 
     my $io = IO::Blob.open("foo bar\tbuz\nqux".encode);
-    $io.word; // => "foo "
+    $io.word; # => "foo "
 
 =head2 words(IO::Blob:D: $count = Inf)
 
@@ -310,7 +332,7 @@ Return a lazy list of the Blob's words (separated on whitespace) read via C<word
 
     my $io = IO::Blob.open("foo bar\tbuz\nqux".encode);
     for $io.words -> $word {
-        $word; // 1st: "foo ", 2nd: "bar\t", 3rd: "buz\n", 4th: "qux"
+        $word; # 1st: "foo ", 2nd: "bar\t", 3rd: "buz\n", 4th: "qux"
     }
 
 =head2 print(IO::Blob:D: *@text) returns Bool
@@ -377,15 +399,21 @@ Returns the current Blob.
 
 L<IO::Scalar of perl5|https://metacpan.org/pod/IO::Scalar>
 
+=head1 AUTHOR
+
+moznion <moznion@gmail.com>
+
+=head1 CONTRIBUTORS
+
+=item mattn
+
+=item shoichikaji
+
 =head1 LICENSE
 
 Copyright 2015 moznion <moznion@gmail.com>
 
 This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
-
-=head1 AUTHOR
-
-moznion E<lt>moznion@gmail.comE<gt>
 
 =end pod
 
