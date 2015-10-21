@@ -263,5 +263,16 @@ subtest {
     is $io.get(), TEXT.encode;
 }, 'Test for nl';
 
+subtest {
+    {
+        my IO::Blob $io = IO::Blob.new(TEXT);
+        is $io.slurp-rest, TEXT;
+    }
+    {
+        my IO::Blob $io = IO::Blob.open(TEXT);
+        is $io.slurp-rest, TEXT;
+    }
+}, 'Test for constructor for string';
+
 done-testing;
 

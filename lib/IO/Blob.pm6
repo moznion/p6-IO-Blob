@@ -24,12 +24,20 @@ multi method perl(IO::Blob:D:) {
     "IO::Blob.new(data => {$.data.perl})"
 }
 
-method new(Blob $data = Buf.new) {
+multi method new(Blob $data = Buf.new) {
     return self.bless(:$data);
 }
 
-method open(Blob $data = Buf.new) returns IO::Blob {
+multi method open(Blob $data = Buf.new) returns IO::Blob {
     return self.new($data);
+}
+
+multi method new(Str $str) {
+    return self.new($str.encode);
+}
+
+multi method open(Str $str) {
+    return self.new($str.encode);
 }
 
 method get(IO::Blob:D:) returns Str {
