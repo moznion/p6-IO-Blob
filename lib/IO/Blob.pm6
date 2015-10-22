@@ -152,7 +152,6 @@ method read(IO::Blob:D: Int(Cool:D) $bytes) returns Blob {
 
     # TODO ins
 
-    $read.WHAT.say;
     return $read;
 }
 
