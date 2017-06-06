@@ -352,6 +352,10 @@ Return a lazy list of the Blob's words (separated on whitespace) read via C<word
 
 Text writing; writes the given C<@text> to the Blob.
 
+=head2 say(IO::Blob:D: *@text) returns Bool
+
+Text writing; similar to write, but add a newline to end of the C<@text>.
+
 =head2 read(IO::Blob:D: Int(Cool:D) $bytes)
 
 Binary reading; reads and returns C<$bytes> bytes from the Blob.
