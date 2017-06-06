@@ -200,6 +200,18 @@ subtest {
 subtest {
     my IO::Blob $io = IO::Blob.new(TEXT.encode);
 
+    $io.say('line5', 'line6');
+    is $io.tell(), 34;
+    is $io.eof(), True;
+
+    $io.seek(0, SeekFromBeginning);
+    is $io.read(TEXT.chars + 13), "line1\nline2\nline3\nline4line5line6\n".encode;
+    is $io.data(), "line1\nline2\nline3\nline4line5line6\n".encode;
+}, 'Test for say()';
+
+subtest {
+    my IO::Blob $io = IO::Blob.new(TEXT.encode);
+
     $io.write('line5'.encode);
     is $io.tell(), 28;
     # is $io.ins(), 5;

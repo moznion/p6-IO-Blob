@@ -142,6 +142,10 @@ method print(IO::Blob:D: *@text) returns Bool {
     return True;
 }
 
+method say(IO::Blob:D: *@text) returns Bool {
+    return self.print(@text, "\n");
+}
+
 method read(IO::Blob:D: Int(Cool:D) $bytes) returns Blob {
     if self.eof {
         return EMPTY;
