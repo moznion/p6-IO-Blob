@@ -114,7 +114,7 @@ Text writing; writes the given `@text` to the Blob.
 say(IO::Blob:D: *@text) returns Bool
 ------------------------------------
 
-Text writing; similar to write, but add a newline to end of the `@text`.
+Text writing; similar to print, but add a newline to end of the `@text`.
 
 read(IO::Blob:D: Int(Cool:D) $bytes)
 ------------------------------------
