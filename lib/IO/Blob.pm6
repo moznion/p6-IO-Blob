@@ -143,7 +143,7 @@ method print(IO::Blob:D: *@text) returns Bool {
 }
 
 method say(IO::Blob:D: *@text) returns Bool {
-    return self.print(@text, "\n");
+    return self.print(@text, self.nl-out);
 }
 
 method read(IO::Blob:D: Int(Cool:D) $bytes) returns Blob {
