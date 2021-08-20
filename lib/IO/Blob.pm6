@@ -41,7 +41,7 @@ multi method open(Str $str) {
 }
 
 method get(IO::Blob:D:) returns Str {
-    return '' if self.eof;
+    return Nil if self.eof;
 
     unless (defined $.nl) {
         return self.slurp-rest();

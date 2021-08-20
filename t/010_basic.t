@@ -29,7 +29,7 @@ subtest {
     is $io.tell(), 23;
     is $io.ins(), 4;
 
-    is $io.get(), "", 'should get the empty';
+    is $io.get(), Nil, 'should get Nil';
     is $io.tell(), 23;
     is $io.ins(), 4;
 
@@ -276,7 +276,7 @@ subtest {
     $io.close();
 
     is $io.is-closed(), True;
-    is $io.get(), "".encode;
+    is $io.get(), Nil;
     is $io.getc(), "".encode;
     is $io.lines(), ();
     is $io.word(), "".encode;
